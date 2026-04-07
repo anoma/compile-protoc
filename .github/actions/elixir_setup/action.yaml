@@ -18,16 +18,8 @@ inputs:
 runs:
   using: "composite"
   steps:
-    # setup the beam
     - name: configure beam
       uses: erlef/setup-beam@v1
       with:
         otp-version: ${{ inputs.otp-version }}
         elixir-version: ${{ inputs.elixir-version }}
-    # install protobuf package
-    - name: Install Protobuf Elixir dependencies
-      shell: bash
-      run: |
-        version=$(echo -n $(elixir -e "$(<mix.lock) |> Map.get(:protobuf) |> elem(2) |> IO.puts"))
-        echo "version: ${version}"
-        mix escript.install hex protobuf "$version" --force
